@@ -12,7 +12,9 @@ const App = () => {
   const [gameMode, updateGameMode] = useState(false);
 
   const [allowGameMode, updateAllowGameMode] = useState(false);
-  const [time, setTime] = useState(60);
+  const [endScreen, updateEndScreen] = useState(false);
+
+  const [time, setTime] = useState(5);
 
   const timer = useRef();
 
@@ -27,9 +29,25 @@ const App = () => {
     updateScore(score + 1);
   };
 
+  const resetGame = () => {
+    setGameMode();
+    updateScore(0);
+    setTime(5);
+    clearInterval(timer.current);
+    timer.current = null;
+    updateEndScreen(false);
+  };
+
   const setGameMode = () => {
+    updateScore(0);
+
     toggleTimer();
     updateGameMode(!gameMode);
+    updateEndScreen(false);
+  };
+
+  const displayEndScreen = () => {
+    updateEndScreen(true);
   };
 
   useEffect(() => {
@@ -37,12 +55,14 @@ const App = () => {
       clearInterval(timer.current);
       timer.current = null;
       updateGameMode(!gameMode);
+
+      displayEndScreen();
     }
   }, [time]);
 
   const toggleTimer = () => {
     if (timer.current == null) {
-      setTime(60);
+      setTime(5);
       timer.current = setInterval(() => {
         setTime(time => time - 1);
       }, 1000);
@@ -65,32 +85,21 @@ const App = () => {
           <button
             className={"quit-button" + (!gameMode ? " quit-button--hidden" : "")}
             onClick={() => {
-              setGameMode();
+              resetGame();
             }}
           >
             Click to quit
           </button>
-          <h2>Frontend Development</h2>
 
-          <header style={{ opacity: gameMode ? 0 : 1, transition: "0.5s opacity ease-in-out 0.3s" }}>
-            <h1>Bish Bash Bosh Designs</h1>
-            <nav>
-              <ul>
-                <li>
-                  <Link to='/'>Scene One</Link>
-                </li>
-                <li>
-                  <Link to='/scene-two'>Scene Two</Link>
-                </li>
-              </ul>
-            </nav>
-          </header>
+          <div className={"end-screen" + (endScreen ? " end-screen--visible" : "")}>
+            <p>Game Over</p>
+            <p>Your score: {score}</p>
+          </div>
+
+          <header style={{ opacity: gameMode ? 0 : 1, transition: "0.5s opacity ease-in-out 0.3s" }}></header>
           <main>
             <Routes>
-              <Route exact path='/' element={<SceneOne />} />
-              <Route path='/scene-two' element={<SceneTwo />} />
-              <Route path='/scene-three' element={<MainScene />} />
-              <Route path='/scene-four' element={<MainScene />} />
+              <Route exact path='/' element={<SceneTwo />} />
             </Routes>
           </main>
         </div>
