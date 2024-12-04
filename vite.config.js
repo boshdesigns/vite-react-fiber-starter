@@ -11,6 +11,7 @@ export default defineConfig(({ command }) => {
   const isWatch = command === "serve";
 
   return {
+    base: "/vite-react-fiber-starter/",
     server: server,
     resolve: {
       alias: {

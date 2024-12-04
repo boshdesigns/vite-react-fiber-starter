@@ -236,7 +236,7 @@ header {
   height: 100%;
   z-index: 0;
   opacity: 0.5;
-  background-image: url("./otis-redding.png");
+  background-image: url("./assets/otis-redding.png");
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 

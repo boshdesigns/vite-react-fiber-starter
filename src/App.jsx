@@ -14,7 +14,7 @@ const App = () => {
   const [allowGameMode, updateAllowGameMode] = useState(false);
   const [endScreen, updateEndScreen] = useState(false);
 
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(60);
 
   const timer = useRef();
 
@@ -32,7 +32,7 @@ const App = () => {
   const resetGame = () => {
     setGameMode();
     updateScore(0);
-    setTime(5);
+    setTime(60);
     clearInterval(timer.current);
     timer.current = null;
     updateEndScreen(false);
@@ -62,7 +62,7 @@ const App = () => {
 
   const toggleTimer = () => {
     if (timer.current == null) {
-      setTime(5);
+      setTime(60);
       timer.current = setInterval(() => {
         setTime(time => time - 1);
       }, 1000);
@@ -99,7 +99,7 @@ const App = () => {
           <header style={{ opacity: gameMode ? 0 : 1, transition: "0.5s opacity ease-in-out 0.3s" }}></header>
           <main>
             <Routes>
-              <Route exact path='/' element={<SceneTwo />} />
+              <Route exact path='/vite-react-fiber-starter/' element={<SceneTwo />} />
             </Routes>
           </main>
         </div>
